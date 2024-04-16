@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:layout/layout.dart';
 import 'package:website/ui/home/section_seven.home.dart';
+import 'package:website/ui/pages/home.page.dart';
 
 import 'package:website/ui/widgets/action_button.dart';
 
@@ -15,8 +16,40 @@ class SectionFiveHome extends StatefulWidget {
 }
 
 class _SectionFiveHomeState extends State<SectionFiveHome> {
-  final GlobalKey widgetKey = GlobalKey();
-  ScrollController scrollController = ScrollController();
+  // ScrollController scrollController = ScrollController();
+  GlobalKey listKey = GlobalKey();
+
+  List<GlobalKey> widgetKeys = List.generate(6, (index) => GlobalKey());
+
+  bool widgetIsMiddle(GlobalKey key) {
+    if (context.breakpoint > LayoutBreakpoint.xs) {
+      return true;
+    }
+
+    try {
+      final RenderBox renderBox =
+          key.currentContext?.findRenderObject() as RenderBox;
+      final position = renderBox.localToGlobal(Offset.zero);
+
+      final mitte = MediaQuery.of(context).size.height / 2;
+
+      final start = position.dy;
+      if (start < 0) return false;
+
+      final widgetMitte = start + (renderBox.size.height / 2);
+
+      final startLine = mitte - (renderBox.size.height / 2);
+      final endLine = mitte + (renderBox.size.height / 2);
+
+      if (widgetMitte > startLine && widgetMitte < endLine) {
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
 
   openProfile() {
     showDialog(
@@ -58,6 +91,38 @@ class _SectionFiveHomeState extends State<SectionFiveHome> {
         ),
       ),
     );
+  }
+
+  check() async {
+    final shown = ShowMiddlePointer.of(context)?.showMiddle ?? false;
+    bool result = false;
+
+    final RenderBox renderBox =
+        listKey.currentContext?.findRenderObject() as RenderBox;
+    final position = renderBox.localToGlobal(Offset.zero);
+    final middleHeight = MediaQuery.of(context).size.height / 2;
+
+    if (position.dy <= middleHeight) {
+      result = true;
+    }
+    if (position.dy < (middleHeight - renderBox.size.height)) {
+      result = false;
+    }
+
+    if (shown != result) {
+      ShowMiddlePointer.of(context)?.toggleShowMiddle(
+        result,
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    widget.scrollController.addListener(() {
+      setState(() {});
+      check();
+    });
+    super.initState();
   }
 
   @override
@@ -146,10 +211,10 @@ class _SectionFiveHomeState extends State<SectionFiveHome> {
                 ),
               ],
             ),
-          if (context.breakpoint > LayoutBreakpoint.sm)
+          if (context.breakpoint > LayoutBreakpoint.xs)
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: context.breakpoint > LayoutBreakpoint.md ? 100 : 0,
+                horizontal: context.breakpoint > LayoutBreakpoint.xs ? 100 : 0,
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,66 +257,104 @@ class _SectionFiveHomeState extends State<SectionFiveHome> {
 
               final size = constraints.maxWidth / divider - 20;
 
-              return Wrap(
-                key: widgetKey,
-                spacing: 10,
-                runSpacing: 10,
-                children: [
-                  ProfitierenItem(
-                    width: size,
-                    height: context.breakpoint == LayoutBreakpoint.xs
-                        ? null
-                        : size * 0.8,
-                    title: 'Individueller Umzugsplan',
-                    text:
-                        'Basierend auf Ihren Bedürfnissen erstellen wir einen maßgeschneiderten Umzugsplan, der alle Details berücksichtigt, um einen reibungslosen Ablauf zu gewährleisten.',
+              return Padding(
+                padding: EdgeInsets.only(
+                    left: context.breakpoint > LayoutBreakpoint.xs ? 0 : 15),
+                child: Container(
+                  padding: EdgeInsets.only(
+                      left: context.breakpoint > LayoutBreakpoint.xs ? 0 : 15),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      left: BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
-                  ProfitierenItem(
-                    width: size,
-                    height: context.breakpoint == LayoutBreakpoint.xs
-                        ? null
-                        : size * 0.8,
-                    title: 'Verpackungsservice',
-                    text:
-                        'Unsere erfahrenen Mitarbeiter kümmern sich um das sichere Verpacken Ihres gesamten Inventars, von empfindlichen Gegenständen bis hin zu Möbeln, um Schäden zu vermeiden.',
+                  child: Wrap(
+                    key: listKey,
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: [
+                      ProfitierenItem(
+                        key: widgetKeys[0],
+                        // isHover: widgetIsMiddle(widgetKeys[0]),
+                        isHover: true,
+
+                        width: size,
+                        height: context.breakpoint == LayoutBreakpoint.xs
+                            ? null
+                            : size * 0.8,
+                        title: 'Individueller Umzugsplan',
+                        text:
+                            'Basierend auf Ihren Bedürfnissen erstellen wir einen maßgeschneiderten Umzugsplan, der alle Details berücksichtigt, um einen reibungslosen Ablauf zu gewährleisten.',
+                      ),
+                      ProfitierenItem(
+                        key: widgetKeys[1],
+                        // isHover: widgetIsMiddle(widgetKeys[1]),
+                        isHover: true,
+
+                        width: size,
+                        height: context.breakpoint == LayoutBreakpoint.xs
+                            ? null
+                            : size * 0.8,
+                        title: 'Verpackungsservice',
+                        text:
+                            'Unsere erfahrenen Mitarbeiter kümmern sich um das sichere Verpacken Ihres gesamten Inventars, von empfindlichen Gegenständen bis hin zu Möbeln, um Schäden zu vermeiden.',
+                      ),
+                      ProfitierenItem(
+                        key: widgetKeys[2],
+                        // isHover: widgetIsMiddle(widgetKeys[2]),
+                        isHover: true,
+
+                        width: size,
+                        height: context.breakpoint == LayoutBreakpoint.xs
+                            ? null
+                            : size * 0.8,
+                        title: 'Möbelmontage und -demontage',
+                        text:
+                            'Wir demontieren und montieren Ihre Möbel professionell, um Zeit zu sparen und sicherzustellen, dass sie sicher transportiert werden.',
+                      ),
+                      ProfitierenItem(
+                        key: widgetKeys[3],
+                        // isHover: widgetIsMiddle(widgetKeys[3]),
+                        isHover: true,
+
+                        width: size,
+                        height: context.breakpoint == LayoutBreakpoint.xs
+                            ? null
+                            : size * 0.8,
+                        title: 'Professionelle Transportmittel',
+                        text:
+                            'Wir verfügen über eine Flotte von Fahrzeugen in verschiedenen Größen, um Ihren Umzug effizient und ohne Verzögerungen durchzuführen.',
+                      ),
+                      ProfitierenItem(
+                        key: widgetKeys[4],
+                        // isHover: widgetIsMiddle(widgetKeys[4]),
+                        isHover: true,
+
+                        width: size,
+                        height: context.breakpoint == LayoutBreakpoint.xs
+                            ? null
+                            : size * 0.8,
+                        title: 'Zeitgerechte Lieferung',
+                        text:
+                            'Wir halten uns strikt an den vereinbarten Zeitplan und liefern Ihr Eigentum pünktlich an die Zieladresse.',
+                      ),
+                      ProfitierenItem(
+                        key: widgetKeys[5],
+                        // isHover: widgetIsMiddle(widgetKeys[5]),
+                        isHover: true,
+                        width: size,
+                        height: context.breakpoint == LayoutBreakpoint.xs
+                            ? null
+                            : size * 0.8,
+                        title: 'Endreinigungsservice',
+                        text:
+                            'Nach dem Umzug bieten wir auch einen Endreinigungsservice an, um sicherzustellen, dass Ihr altes Zuhause ordentlich und sauber hinterlassen wird.',
+                      ),
+                    ],
                   ),
-                  ProfitierenItem(
-                    width: size,
-                    height: context.breakpoint == LayoutBreakpoint.xs
-                        ? null
-                        : size * 0.8,
-                    title: 'Möbelmontage und -demontage',
-                    text:
-                        'Wir demontieren und montieren Ihre Möbel professionell, um Zeit zu sparen und sicherzustellen, dass sie sicher transportiert werden.',
-                  ),
-                  ProfitierenItem(
-                    width: size,
-                    height: context.breakpoint == LayoutBreakpoint.xs
-                        ? null
-                        : size * 0.8,
-                    title: 'Professionelle Transportmittel',
-                    text:
-                        'Wir verfügen über eine Flotte von Fahrzeugen in verschiedenen Größen, um Ihren Umzug effizient und ohne Verzögerungen durchzuführen.',
-                  ),
-                  ProfitierenItem(
-                    width: size,
-                    height: context.breakpoint == LayoutBreakpoint.xs
-                        ? null
-                        : size * 0.8,
-                    title: 'Zeitgerechte Lieferung',
-                    text:
-                        'Wir halten uns strikt an den vereinbarten Zeitplan und liefern Ihr Eigentum pünktlich an die Zieladresse.',
-                  ),
-                  ProfitierenItem(
-                    width: size,
-                    height: context.breakpoint == LayoutBreakpoint.xs
-                        ? null
-                        : size * 0.8,
-                    title: 'Endreinigungsservice',
-                    text:
-                        'Nach dem Umzug bieten wir auch einen Endreinigungsservice an, um sicherzustellen, dass Ihr altes Zuhause ordentlich und sauber hinterlassen wird.',
-                  ),
-                ],
+                ),
               );
             },
           ),
@@ -293,13 +396,12 @@ class _SectionFiveHomeState extends State<SectionFiveHome> {
                         : Colors.transparent,
                     size: 30,
                   ),
-                  Icon(
-                    Icons.phone,
-                    color: context.breakpoint > LayoutBreakpoint.xs
-                        ? Theme.of(context).primaryColor
-                        : Colors.transparent,
-                    size: 30,
-                  ),
+                  if (context.breakpoint == LayoutBreakpoint.xs)
+                    Icon(
+                      Icons.phone,
+                      color: Theme.of(context).primaryColor,
+                      size: 30,
+                    ),
                 ],
               ),
               const Gap(5),
@@ -415,6 +517,7 @@ class ProfitierenItem extends StatefulWidget {
     required this.height,
     required this.title,
     required this.text,
+    this.isHover = false,
   });
 
   final double width;
@@ -422,12 +525,24 @@ class ProfitierenItem extends StatefulWidget {
   final String title;
   final String text;
 
+  final bool isHover;
+
   @override
   State<ProfitierenItem> createState() => _ProfitierenItemState();
 }
 
 class _ProfitierenItemState extends State<ProfitierenItem> {
+  final GlobalKey widgetKey = GlobalKey();
   bool isHover = false;
+
+  @override
+  void initState() {
+    setState(() {
+      isHover = widget.isHover;
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -436,6 +551,7 @@ class _ProfitierenItemState extends State<ProfitierenItem> {
     }
 
     return MouseRegion(
+      key: widgetKey,
       onEnter: (event) {
         setState(() {
           isHover = true;
@@ -450,15 +566,20 @@ class _ProfitierenItemState extends State<ProfitierenItem> {
         elevation: isHover ? 20 : 0,
         borderOnForeground: false,
         color: Colors.white,
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
           width: widget.width,
           height: widget.height,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-              color: Colors.white,
-              border: context.breakpoint > LayoutBreakpoint.xs
-                  ? null
-                  : Border.all(color: Colors.grey.shade300)),
+            color:
+                widget.isHover ? Colors.white : Colors.black.withOpacity(0.7),
+            border: context.breakpoint > LayoutBreakpoint.xs
+                ? null
+                : Border.all(
+                    color: Colors.grey.shade300,
+                  ),
+          ),
           child: Column(
             children: [
               Icon(

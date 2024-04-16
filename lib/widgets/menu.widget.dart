@@ -222,11 +222,13 @@ class MenuButton extends StatefulWidget {
     required this.text,
     this.active = false,
     this.onTap,
+    this.expand = false,
   });
 
   final String text;
   final bool active;
   final VoidCallback? onTap;
+  final bool expand;
 
   @override
   State<MenuButton> createState() => _MenuButtonState();
@@ -267,6 +269,7 @@ class _MenuButtonState extends State<MenuButton> {
             elevation: isHover ? 5 : 0,
             borderRadius: BorderRadius.circular(30),
             child: Container(
+              width: widget.expand ? double.infinity : null,
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
                 vertical: 10,
@@ -284,6 +287,7 @@ class _MenuButtonState extends State<MenuButton> {
               ),
               child: Text(
                 widget.text,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: widget.active ? Colors.black : Colors.white,
@@ -298,7 +302,66 @@ class _MenuButtonState extends State<MenuButton> {
 }
 
 class SideBar extends StatelessWidget {
-  const SideBar({super.key});
+  const SideBar({
+    super.key,
+    this.isHome = false,
+    this.isService = false,
+    required this.buildContext,
+    required this.scrollController,
+  });
+
+  final bool isHome;
+  final bool isService;
+  final BuildContext buildContext;
+  final AutoScrollController scrollController;
+
+  openProfile() {
+    showDialog(
+      context: buildContext,
+      builder: (builder) => Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+          ),
+          padding: buildContext.breakpoint > LayoutBreakpoint.xs
+              ? const EdgeInsets.all(20.0)
+              : null,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(buildContext),
+                  child: const Icon(
+                    Icons.close_rounded,
+                    size: 50,
+                    shadows: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 5,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Material(
+                  color: Colors.white,
+                  child: SingleChildScrollView(
+                      child: SectionSevenHome(
+                    modal: buildContext.breakpoint == LayoutBreakpoint.xs,
+                  )),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -310,10 +373,45 @@ class SideBar extends StatelessWidget {
             'assets/img/logo.webp',
             fit: BoxFit.fitWidth,
           ),
-          const MenuButton(text: 'Home'),
-          const MenuButton(text: 'Leistungen'),
-          const MenuButton(text: 'Über uns'),
-          const MenuButton(text: 'Kontakt'),
+          const Divider(),
+          MenuButton(
+            text: 'Home',
+            expand: true,
+            active: isHome,
+            onTap: () {
+              context.go('/');
+            },
+          ),
+          MenuButton(
+            text: 'Leistungen',
+            expand: true,
+            active: isService,
+            onTap: () {
+              context.go('/?service=Privatumzug');
+            },
+          ),
+          MenuButton(
+            text: 'Über uns',
+            expand: true,
+            onTap: () {
+              if (isHome) {
+                context.pop();
+                scrollController.scrollToIndex(
+                  10,
+                  preferPosition: AutoScrollPosition.end,
+                );
+              } else {
+                buildContext.go(Uri(path: '/', queryParameters: {
+                  '#': 'about',
+                }).toString());
+              }
+            },
+          ),
+          MenuButton(
+            text: 'Kontakt',
+            expand: true,
+            onTap: openProfile,
+          ),
         ],
       ),
     );

@@ -305,127 +305,169 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
                               ),
                             ),
                             const Gap(20),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Montag',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                                 Text(
                                   '7:00 - 18:00 Uhr',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                               ],
                             ),
                             const Divider(),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Dienstag',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                                 Text(
                                   '7:00 - 18:00 Uhr',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                               ],
                             ),
                             const Divider(),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Mittwoch',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                                 Text(
                                   '7:00 - 18:00 Uhr',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                               ],
                             ),
                             const Divider(),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Donnerstag',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                                 Text(
                                   '7:00 - 18:00 Uhr',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                               ],
                             ),
                             const Divider(),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Freitag',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                                 Text(
                                   '7:00 - 18:00 Uhr',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                               ],
                             ),
                             const Divider(),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Samstag',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                                 Text(
                                   '7:00 - 18:00 Uhr',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                               ],
                             ),
                             const Divider(),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Sonntag',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                   ),
                                 ),
                                 Text(
                                   'Geschlossen',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize:
+                                        context.breakpoint > LayoutBreakpoint.xs
+                                            ? 20
+                                            : 16,
                                     color: Colors.red,
                                   ),
                                 ),

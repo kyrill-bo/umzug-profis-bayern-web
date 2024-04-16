@@ -119,6 +119,11 @@ class _ServicePageState extends State<ServicePage> {
         isService: true,
         scrollController: autoScrollController,
       ),
+      endDrawer: SideBar(
+        isService: true,
+        buildContext: context,
+        scrollController: autoScrollController,
+      ),
       backgroundColor: const Color.fromRGBO(160, 160, 161, 1),
       body: Stack(
         fit: StackFit.expand,
