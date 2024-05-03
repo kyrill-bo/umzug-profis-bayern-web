@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Layout(
       child: MaterialApp.router(
-        title: 'Profis Umzug Bayern',
+        title: 'Umzug Profis Bayern',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(

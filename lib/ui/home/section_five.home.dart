@@ -258,18 +258,20 @@ class _SectionFiveHomeState extends State<SectionFiveHome> {
               final size = constraints.maxWidth / divider - 20;
 
               return Padding(
-                padding: EdgeInsets.only(
-                    left: context.breakpoint > LayoutBreakpoint.xs ? 0 : 15),
+                // padding: EdgeInsets.only(
+                //     left: context.breakpoint > LayoutBreakpoint.xs ? 0 : 15),
                 child: Container(
-                  padding: EdgeInsets.only(
-                      left: context.breakpoint > LayoutBreakpoint.xs ? 0 : 15),
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      left: BorderSide(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
+                  // padding: EdgeInsets.only(
+                  //     left: context.breakpoint > LayoutBreakpoint.xs ? 0 : 15),
+                  // decoration: BoxDecoration(
+                  //   border: context.breakpoint > LayoutBreakpoint.xs
+                  //       ? null
+                  //       : const Border(
+                  //           left: BorderSide(
+                  //             color: Colors.black,
+                  //           ),
+                  //         ),
+                  // ),
                   child: Wrap(
                     key: listKey,
                     spacing: 10,

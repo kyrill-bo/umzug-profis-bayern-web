@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:layout/layout.dart';
 import 'package:website/ui/widgets/action_button.dart';
+import 'package:dio/dio.dart';
 
 class SectionSevenHome extends StatefulWidget {
   const SectionSevenHome({
@@ -29,17 +30,55 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
   );
   int currentStep = 0;
 
+  final _dio = Dio();
+
+  // step one
   TextEditingController wohnortController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController dateController = TextEditingController();
 
+  // step two
   String? selectedObjectArt;
   String? selectedStock;
   String? selectedAnzahlZimmer;
+  String? selectedAnzahlUmziehendePersonen;
   TextEditingController wohnflaecheController = TextEditingController();
+  String? selectedAnzahlUmzugskartons;
+  String? selectedOptionalOptions;
+  String? selectedLiftVorhanden;
+  TextEditingController zusatzInfos = TextEditingController();
 
-  String? selectedSex;
-  bool? uploadMedia;
+  bool moebelabbau = false;
+  bool lampenabmontieren = false;
+  bool hausrateinpacken = false;
+
+  // step three
+  TextEditingController newWohnortController = TextEditingController();
+  TextEditingController newAddressController = TextEditingController();
+  String? newSelectedObjectArt;
+  String? newSelectedStock;
+
+  bool newMoebelabbau = false;
+  bool newLampenabmontieren = false;
+  bool newHausrateinpacken = false;
+
+  String? newSelectedLiftVorhanden;
+  TextEditingController newZusatzInfos = TextEditingController();
+
+  // step four
+  TextEditingController vornameController = TextEditingController();
+  TextEditingController nachnameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController telefonController = TextEditingController();
+
+  bool isMorgends = false;
+  bool isMittags = false;
+  bool isAbends = false;
+  bool isDurchgehend = false;
+
+  // -------------------------------
+
+  String filePath = '';
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -47,20 +86,198 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
       type: FileType.image,
     );
 
-    if (result != null) {}
+    if (result != null) {
+      setState(() {
+        filePath = result.files.first.path!;
+      });
+    }
   }
 
+  List<String> get nextIsPossible {
+    List<String> nextIsPossible = [];
+
+    if (currentStep == 0) {
+      if (wohnortController.text.isEmpty) {
+        nextIsPossible.add('Trage dein Wohnort ein.');
+      }
+
+      if (addressController.text.isEmpty) {
+        nextIsPossible.add('Trage deine Adresse ein.');
+      }
+
+      if (dateController.text.isEmpty) {
+        nextIsPossible.add('Wähle ein Umzugsdatum aus.');
+      }
+    }
+
+    if (currentStep == 1) {
+      if (selectedObjectArt == null) {
+        nextIsPossible.add('Wähle ein Objectart aus.');
+      }
+
+      if (selectedStock == null) {
+        nextIsPossible.add('Wähle ein Stockwerk aus.');
+      }
+
+      if (selectedAnzahlZimmer == null) {
+        nextIsPossible.add('Wähle eine Anzah der Zimmer aus.');
+      }
+
+      if (selectedAnzahlUmziehendePersonen == null) {
+        nextIsPossible.add('Wähle die Anzahl der Umziehende Personen aus.');
+      }
+
+      if (wohnflaecheController.text.isEmpty) {
+        nextIsPossible.add('Trage deine Wohnfläche ein.');
+      }
+
+      if (selectedAnzahlUmzugskartons == null) {
+        nextIsPossible.add('Wähle die Anzahl der Umzugskartons aus.');
+      }
+
+      if (selectedLiftVorhanden == null) {
+        nextIsPossible.add('Gebe an, ob ein Lift vorhanden ist.');
+      }
+    }
+
+    if (currentStep == 2) {
+      if (newWohnortController.text.isEmpty) {
+        nextIsPossible.add('Trage dein neuen Wohnort ein.');
+      }
+
+      if (newAddressController.text.isEmpty) {
+        nextIsPossible.add('Trage deine neue Adresse ein.');
+      }
+
+      if (newSelectedObjectArt == null) {
+        nextIsPossible.add('Wähle eine Objektart aus.');
+      }
+
+      if (newSelectedStock == null) {
+        nextIsPossible.add('Wähle ein Stockwerk aus.');
+      }
+
+      if (newSelectedLiftVorhanden == null) {
+        nextIsPossible.add('Gebe an, ob ein Lift vorhanden ist.');
+      }
+    }
+
+    if (currentStep == 3) {
+      if (vornameController.text.isEmpty) {
+        nextIsPossible.add('Trage deinen Vornamen ein.');
+      }
+
+      if (nachnameController.text.isEmpty) {
+        nextIsPossible.add('Trage deinen Nachnamen ein.');
+      }
+
+      if (emailController.text.isEmpty) {
+        nextIsPossible.add('Trage deine Email Adresse ein.');
+      }
+
+      if (telefonController.text.isEmpty) {
+        nextIsPossible.add('Gib eine Telefonnummer ein.');
+      }
+    }
+
+    return nextIsPossible;
+  }
+
+  List<String> errorMSG = [];
+
   next() {
+    setState(() {
+      errorMSG = nextIsPossible;
+    });
+
+    if (errorMSG.isNotEmpty) {
+      return;
+    }
+
+    if (currentStep == 3) {
+      sendEmail();
+    } else {
+      pageController
+          .nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      )
+          .then((_) {
+        setState(() {
+          currentStep += 1;
+        });
+      });
+    }
+  }
+
+  moveBack() {
     pageController
-        .nextPage(
+        .previousPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.ease,
     )
-        .then((_) {
+        .then((value) {
       setState(() {
-        currentStep += 1;
+        currentStep -= 1;
       });
     });
+  }
+
+  void sendEmail() async {
+    try {
+      FormData formData = FormData.fromMap({
+        'sender': emailController.text,
+        'content': {
+          "wohnort": wohnortController.text,
+          "strasse": addressController.text,
+          "umzugsdatum": dateController.text,
+          "artdesobjekts": selectedObjectArt,
+          "stockwerk": selectedStock,
+          "anzahlzimmer": selectedAnzahlZimmer,
+          "wohnflaeche": wohnflaecheController.text,
+          "anzahlpersonen": selectedAnzahlUmziehendePersonen,
+          "anzahlumzugskartons": selectedAnzahlUmzugskartons,
+          "currentOptionalOptions": {
+            "moebelabbau": moebelabbau ? 'Ja' : 'Nein',
+            "lampenabmontieren": lampenabmontieren ? 'Ja' : 'Nein',
+            "hausrateinpacken": hausrateinpacken ? 'Ja' : 'Nein',
+          },
+          "aufzugvorhanden": selectedLiftVorhanden,
+          "zusatzinfo": zusatzInfos.text,
+          "neuwohnort": newWohnortController.text,
+          "neustrasse": newAddressController.text,
+          "neuartdesobjekts": newSelectedObjectArt,
+          "neustockwerk": newSelectedStock,
+          "neuanzahlzimmer": selectedAnzahlZimmer,
+          "neuwohnflaeche": wohnflaecheController.text,
+          "neuanzahlpersonen": selectedAnzahlUmziehendePersonen,
+          "neuanzahlumzugskartons": selectedAnzahlUmzugskartons,
+          "newOptionalOptions": {
+            "neumoebelabbau": newMoebelabbau ? 'Ja' : 'Nein',
+            "neulampenabmontieren": newLampenabmontieren ? 'Ja' : 'Nein',
+            "neuhausrateinpacken": newHausrateinpacken ? 'Ja' : 'Nein',
+          },
+          "neuaufzugvorhanden": newSelectedLiftVorhanden,
+          "neuzusatzinfo": newZusatzInfos.text,
+          "morgens": isMorgends ? 'Ja' : 'Nein',
+          "mittags": isMittags ? 'Ja' : 'Nein',
+          "abends": isAbends ? 'Ja' : 'Nein',
+          "durchgehend": isDurchgehend ? 'Ja' : 'Nein',
+          "vorname": vornameController.text,
+          "nachname": nachnameController.text,
+          "email": emailController.text,
+          "telefon": telefonController.text
+        },
+      });
+
+      await _dio.post(
+        'http://localhost:3000/send-email',
+        data: formData,
+      );
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
   @override
@@ -550,18 +767,67 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
               ],
             ),
           ),
-          const Gap(20),
-          ElevatedButton(
-            onPressed: next,
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Weiter',
-                style: TextStyle(
-                  fontSize: 20,
+          if (errorMSG.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 40,
+              ),
+              child: Container(
+                width: double.maxFinite,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.red.withOpacity(0.2),
+                ),
+                child: ListView.separated(
+                  itemBuilder: (context, index) => Text(
+                    errorMSG[index],
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                      fontSize: 16,
+                    ),
+                  ),
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemCount: errorMSG.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                 ),
               ),
             ),
+          const Gap(20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (currentStep > 0)
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: ElevatedButton(
+                    onPressed: moveBack,
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Zurück',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ElevatedButton(
+                onPressed: next,
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Weiter',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -572,34 +838,34 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'An wen dürften wir das Umzugsangebot senden?',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: 30,
-          ),
-        ),
-        RadioListTile<String>(
-          title: const Text('Mann'),
-          value: 'Mann',
-          groupValue: selectedSex,
-          onChanged: (value) {
-            setState(() {
-              selectedSex = value;
-            });
-          },
-        ),
-        RadioListTile<String>(
-          title: const Text('Frau'),
-          value: 'Frau',
-          groupValue: selectedSex,
-          onChanged: (value) {
-            setState(() {
-              selectedSex = value;
-            });
-          },
-        ),
-        const Gap(20),
+        // Text(
+        //   'An wen dürften wir das Umzugsangebot senden?',
+        //   style: TextStyle(
+        //     color: Theme.of(context).primaryColor,
+        //     fontSize: 30,
+        //   ),
+        // ),
+        // RadioListTile<String>(
+        //   title: const Text('Mann'),
+        //   value: 'Mann',
+        //   groupValue: selectedSex,
+        //   onChanged: (value) {
+        //     setState(() {
+        //       selectedSex = value;
+        //     });
+        //   },
+        // ),
+        // RadioListTile<String>(
+        //   title: const Text('Frau'),
+        //   value: 'Frau',
+        //   groupValue: selectedSex,
+        //   onChanged: (value) {
+        //     setState(() {
+        //       selectedSex = value;
+        //     });
+        //   },
+        // ),
+        // const Gap(20),
         const Text(
           'Vorname',
           style: TextStyle(
@@ -607,8 +873,9 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const TextField(
-          decoration: InputDecoration(
+        TextField(
+          controller: vornameController,
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Max',
           ),
@@ -621,8 +888,9 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const TextField(
-          decoration: InputDecoration(
+        TextField(
+          controller: nachnameController,
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Mustermann',
           ),
@@ -635,8 +903,9 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const TextField(
-          decoration: InputDecoration(
+        TextField(
+          controller: telefonController,
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: '+49 1234 5678 912',
           ),
@@ -649,8 +918,9 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const TextField(
-          decoration: InputDecoration(
+        TextField(
+          controller: emailController,
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'max@example.com',
           ),
@@ -666,8 +936,12 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
         Row(
           children: [
             Checkbox(
-              value: false,
-              onChanged: (value) {},
+              value: isMorgends,
+              onChanged: (value) {
+                setState(() {
+                  isMorgends = value ?? false;
+                });
+              },
             ),
             const Gap(5),
             const Text('Morgens von 8:00 bis 11:30 Uhr')
@@ -676,8 +950,12 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
         Row(
           children: [
             Checkbox(
-              value: false,
-              onChanged: (value) {},
+              value: isMittags,
+              onChanged: (value) {
+                setState(() {
+                  isMittags = value ?? false;
+                });
+              },
             ),
             const Gap(5),
             const Text('Mittags von 11:30 bis 13:00 Uhr')
@@ -686,8 +964,12 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
         Row(
           children: [
             Checkbox(
-              value: false,
-              onChanged: (value) {},
+              value: isAbends,
+              onChanged: (value) {
+                setState(() {
+                  isAbends = value ?? false;
+                });
+              },
             ),
             const Gap(5),
             const Text('Abends ab 17 Uhr')
@@ -696,8 +978,12 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
         Row(
           children: [
             Checkbox(
-              value: false,
-              onChanged: (value) {},
+              value: isDurchgehend,
+              onChanged: (value) {
+                setState(() {
+                  isDurchgehend = value ?? false;
+                });
+              },
             ),
             const Gap(5),
             const Text('Durchgehend erreichbar')
@@ -759,7 +1045,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Wie ist Ihre aktuelle Wohnsituation?',
+          'Wie ist Ihre neue Wohnsituation?',
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontSize: 30,
@@ -774,6 +1060,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         TextField(
+          controller: newWohnortController,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
@@ -790,6 +1077,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         TextField(
+          controller: newAddressController,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
@@ -797,21 +1085,22 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
             hintText: 'Musterstraße 123',
           ),
         ),
+        const Gap(20),
         const Text(
-          'Objectart',
+          'Objektart',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
         DropdownButton<String>(
-          value: null,
+          value: newSelectedObjectArt,
           hint: const Text('Bitte auswählen'),
           isExpanded: true,
           dropdownColor: Colors.white,
           onChanged: (value) {
             setState(() {
-              selectedObjectArt = value ?? '';
+              newSelectedObjectArt = value ?? '';
             });
           },
           items: const [
@@ -853,6 +1142,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
             ),
           ],
         ),
+        const Gap(20),
         const Text(
           'Stockwerk',
           style: TextStyle(
@@ -861,13 +1151,13 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         DropdownButton<String>(
-          value: null,
+          value: newSelectedStock,
           hint: const Text('Bitte auswählen'),
           isExpanded: true,
           dropdownColor: Colors.white,
           onChanged: (value) {
             setState(() {
-              selectedStock = value ?? '';
+              newSelectedStock = value ?? '';
             });
           },
           items: const [
@@ -936,8 +1226,12 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
         Row(
           children: [
             Checkbox(
-              value: false,
-              onChanged: (value) {},
+              value: newMoebelabbau,
+              onChanged: (value) {
+                setState(() {
+                  newMoebelabbau = value ?? false;
+                });
+              },
             ),
             const Gap(5),
             const Text('Möbelabbau')
@@ -946,8 +1240,12 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
         Row(
           children: [
             Checkbox(
-              value: false,
-              onChanged: (value) {},
+              value: newLampenabmontieren,
+              onChanged: (value) {
+                setState(() {
+                  newLampenabmontieren = value ?? false;
+                });
+              },
             ),
             const Gap(5),
             const Text('Lampen abmontieren')
@@ -956,8 +1254,12 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
         Row(
           children: [
             Checkbox(
-              value: false,
-              onChanged: (value) {},
+              value: newHausrateinpacken,
+              onChanged: (value) {
+                setState(() {
+                  newHausrateinpacken = value ?? false;
+                });
+              },
             ),
             const Gap(5),
             const Text('Hausrat einpacken')
@@ -972,11 +1274,15 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         DropdownButton<String>(
-          value: null,
+          value: newSelectedLiftVorhanden,
           hint: const Text('Bitte auswählen'),
           isExpanded: true,
           dropdownColor: Colors.white,
-          onChanged: (value) {},
+          onChanged: (value) {
+            setState(() {
+              newSelectedLiftVorhanden = value ?? '';
+            });
+          },
           items: const [
             DropdownMenuItem<String>(
               value: 'Ja',
@@ -997,6 +1303,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         TextField(
+          controller: newZusatzInfos,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
@@ -1013,7 +1320,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Wie ist Ihre neue Wohnsituation?',
+          'Wie ist Ihre aktuelle Wohnsituation?',
           style: TextStyle(
             color: Theme.of(context).primaryColor,
             fontSize: 30,
@@ -1028,7 +1335,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         DropdownButton<String>(
-          value: null,
+          value: selectedObjectArt,
           hint: const Text('Bitte auswählen'),
           isExpanded: true,
           dropdownColor: Colors.white,
@@ -1085,7 +1392,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         DropdownButton<String>(
-          value: null,
+          value: selectedStock,
           hint: const Text('Bitte auswählen'),
           isExpanded: true,
           dropdownColor: Colors.white,
@@ -1158,7 +1465,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         DropdownButton<String>(
-          value: null,
+          value: selectedAnzahlZimmer,
           hint: const Text('Bitte auswählen'),
           isExpanded: true,
           dropdownColor: Colors.white,
@@ -1260,13 +1567,13 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         DropdownButton<String>(
-          value: null,
+          value: selectedAnzahlUmziehendePersonen,
           hint: const Text('Bitte auswählen'),
           isExpanded: true,
           dropdownColor: Colors.white,
           onChanged: (value) {
             setState(() {
-              selectedAnzahlZimmer = value ?? '';
+              selectedAnzahlUmziehendePersonen = value ?? '';
             });
           },
           items: const [
@@ -1309,11 +1616,15 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         DropdownButton<String>(
-          value: null,
+          value: selectedAnzahlUmzugskartons,
           hint: const Text('Bitte auswählen'),
           isExpanded: true,
           dropdownColor: Colors.white,
-          onChanged: (value) {},
+          onChanged: (value) {
+            setState(() {
+              selectedAnzahlUmzugskartons = value ?? '';
+            });
+          },
           items: const [
             DropdownMenuItem<String>(
               value: 'Keine',
@@ -1356,8 +1667,12 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
         Row(
           children: [
             Checkbox(
-              value: false,
-              onChanged: (value) {},
+              value: moebelabbau,
+              onChanged: (value) {
+                setState(() {
+                  moebelabbau = value ?? false;
+                });
+              },
             ),
             const Gap(5),
             const Text('Möbelabbau')
@@ -1366,8 +1681,12 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
         Row(
           children: [
             Checkbox(
-              value: false,
-              onChanged: (value) {},
+              value: lampenabmontieren,
+              onChanged: (value) {
+                setState(() {
+                  lampenabmontieren = value ?? false;
+                });
+              },
             ),
             const Gap(5),
             const Text('Lampen abmontieren')
@@ -1376,8 +1695,12 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
         Row(
           children: [
             Checkbox(
-              value: false,
-              onChanged: (value) {},
+              value: hausrateinpacken,
+              onChanged: (value) {
+                setState(() {
+                  hausrateinpacken = value ?? false;
+                });
+              },
             ),
             const Gap(5),
             const Text('Hausrat einpacken')
@@ -1392,11 +1715,15 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         DropdownButton<String>(
-          value: null,
+          value: selectedLiftVorhanden,
           hint: const Text('Bitte auswählen'),
           isExpanded: true,
           dropdownColor: Colors.white,
-          onChanged: (value) {},
+          onChanged: (value) {
+            setState(() {
+              selectedLiftVorhanden = value ?? '';
+            });
+          },
           items: const [
             DropdownMenuItem<String>(
               value: 'Ja',
@@ -1417,6 +1744,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         TextField(
+          controller: zusatzInfos,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
@@ -1488,6 +1816,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         TextField(
+          controller: wohnortController,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
@@ -1504,6 +1833,7 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
           ),
         ),
         TextField(
+          controller: addressController,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
