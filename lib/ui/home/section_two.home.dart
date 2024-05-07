@@ -232,7 +232,8 @@ class _SectionTwoHomeState extends State<SectionTwoHome>
                         lg: 0.3,
                       ),
                       enlargeCenterPage: true,
-                      autoPlay: true,
+                      // autoPlay: true,
+                      autoPlay: false,
                     ),
                   ),
                 ),
@@ -241,6 +242,11 @@ class _SectionTwoHomeState extends State<SectionTwoHome>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Expanded(
+                        child: Container(
+                          color: Colors.transparent,
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           controller.previousPage();
@@ -261,6 +267,11 @@ class _SectionTwoHomeState extends State<SectionTwoHome>
                             Icons.arrow_back_ios,
                             size: 50,
                           ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          color: Colors.transparent,
                         ),
                       ),
                     ],

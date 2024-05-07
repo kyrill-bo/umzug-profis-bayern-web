@@ -114,7 +114,7 @@ class _CityPageState extends State<CityPage> {
     },
     {
       'name': 'Cham',
-      'img': 'assets/img/cham.jpg',
+      'img': 'assets/img/cham.webp',
     },
     {
       'name': 'Dresden',
@@ -154,7 +154,7 @@ class _CityPageState extends State<CityPage> {
     },
     {
       'name': 'Pilsen',
-      'img': 'assets/img/pilsen.jpg',
+      'img': 'assets/img/pilsen.webp',
     },
     {
       'name': 'Prag',
@@ -388,6 +388,7 @@ class _CityPageState extends State<CityPage> {
                                   ),
                                 ),
                               ),
+                              const Gap(120),
                             ],
                           ),
                         ),
@@ -709,8 +710,8 @@ class _CityPageState extends State<CityPage> {
                             'Firmenumzug:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 18,
+                              // color: Theme.of(context).primaryColor,
+                              fontSize: 20,
                             ),
                           ),
                           const Text(
@@ -725,8 +726,8 @@ class _CityPageState extends State<CityPage> {
                             'Fernumzug:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 18,
+                              // color: Theme.of(context).primaryColor,
+                              fontSize: 20,
                             ),
                           ),
                           const Text(
@@ -741,8 +742,8 @@ class _CityPageState extends State<CityPage> {
                             'USM Haller Montage:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 18,
+                              // color: Theme.of(context).primaryColor,
+                              fontSize: 20,
                             ),
                           ),
                           const Text(
@@ -757,8 +758,8 @@ class _CityPageState extends State<CityPage> {
                             'Einlagerung:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 18,
+                              // color: Theme.of(context).primaryColor,
+                              fontSize: 20,
                             ),
                           ),
                           const Text(
@@ -773,8 +774,8 @@ class _CityPageState extends State<CityPage> {
                             'Privatumzug:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 18,
+                              // color: Theme.of(context).primaryColor,
+                              fontSize: 20,
                             ),
                           ),
                           const Text(
@@ -789,8 +790,8 @@ class _CityPageState extends State<CityPage> {
                             'Entrümpelung:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 18,
+                              // color: Theme.of(context).primaryColor,
+                              fontSize: 20,
                             ),
                           ),
                           const Text(

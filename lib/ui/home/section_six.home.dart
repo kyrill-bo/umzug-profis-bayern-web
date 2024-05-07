@@ -11,7 +11,8 @@ class SectionSixHome extends StatefulWidget {
   State<SectionSixHome> createState() => _SectionSixHomeState();
 }
 
-class _SectionSixHomeState extends State<SectionSixHome> {
+class _SectionSixHomeState extends State<SectionSixHome>
+    with AutomaticKeepAliveClientMixin {
   CarouselController controller = CarouselController();
   int currentIndex = 0;
 
@@ -87,7 +88,11 @@ class _SectionSixHomeState extends State<SectionSixHome> {
   ];
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       width: double.infinity,
       color: Colors.white,

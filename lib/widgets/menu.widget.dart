@@ -125,6 +125,10 @@ class _MenuState extends State<Menu> {
                 GestureDetector(
                   onTap: () {
                     context.go('/');
+                    widget.scrollController.scrollToIndex(
+                      0,
+                      preferPosition: AutoScrollPosition.begin,
+                    );
                   },
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
@@ -157,7 +161,7 @@ class _MenuState extends State<Menu> {
                   ),
                 ),
                 const Spacer(),
-                if (context.breakpoint > LayoutBreakpoint.sm)
+                if (context.breakpoint > LayoutBreakpoint.xs)
                   Row(
                     children: [
                       MenuButton(
@@ -181,7 +185,7 @@ class _MenuState extends State<Menu> {
                         onTap: () {
                           if (widget.isHome) {
                             widget.scrollController.scrollToIndex(
-                              10,
+                              9,
                               preferPosition: AutoScrollPosition.end,
                             );
                           } else {
@@ -397,8 +401,8 @@ class SideBar extends StatelessWidget {
               if (isHome) {
                 context.pop();
                 scrollController.scrollToIndex(
-                  10,
-                  preferPosition: AutoScrollPosition.end,
+                  9,
+                  preferPosition: AutoScrollPosition.middle,
                 );
               } else {
                 buildContext.go(Uri(path: '/', queryParameters: {

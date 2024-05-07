@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gap/gap.dart';
 import 'package:layout/layout.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -88,42 +89,50 @@ class _SectionOneHomeState extends State<SectionOneHome>
               : Alignment.centerLeft,
         ),
       ),
-      child: Container(
-        color: Colors.black.withOpacity(0.4),
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                context.breakpoint > LayoutBreakpoint.xs
-                    ? 'assets/img/s1-bg-two.webp'
-                    : 'assets/img/bg-p2-two.webp',
-              ),
-              fit: BoxFit.fitHeight,
-              alignment: context.breakpoint > LayoutBreakpoint.xs
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
-            ),
+      child: Animate(
+        effects: const [
+          FadeEffect(
+            delay: Duration(milliseconds: 200),
+            duration: Duration(milliseconds: 200),
           ),
-          child: Stack(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: MediaQuery.of(context).size.width >= 1000
-                        ? textWidget(context)
-                        : Container(),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(),
-                  )
-                ],
+        ],
+        child: Container(
+          color: Colors.black.withOpacity(0.4),
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  context.breakpoint > LayoutBreakpoint.xs
+                      ? 'assets/img/s1-bg-two.webp'
+                      : 'assets/img/bg-p2-two.webp',
+                ),
+                fit: BoxFit.fitHeight,
+                alignment: context.breakpoint > LayoutBreakpoint.xs
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft,
               ),
-              MediaQuery.of(context).size.width < 1000
-                  ? textWidget(context)
-                  : Container(),
-            ],
+            ),
+            child: Stack(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: MediaQuery.of(context).size.width >= 1000
+                          ? textWidget(context)
+                          : Container(),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(),
+                    )
+                  ],
+                ),
+                MediaQuery.of(context).size.width < 1000
+                    ? textWidget(context)
+                    : Container(),
+              ],
+            ),
           ),
         ),
       ),
@@ -235,12 +244,13 @@ class _SectionOneHomeState extends State<SectionOneHome>
                 ),
                 const Gap(10),
                 ActionButton(
-                  text: 'ERFAHREN SIE MEHR',
+                  text: 'ÜBER UNS',
                   width: 230,
                   onPressed: () {
                     widget.autoScrollController.scrollToIndex(
-                      10,
+                      9,
                       preferPosition: AutoScrollPosition.end,
+                      duration: const Duration(milliseconds: 500),
                     );
                   },
                 ),
@@ -256,11 +266,12 @@ class _SectionOneHomeState extends State<SectionOneHome>
                 ),
                 const Gap(10),
                 ActionButton(
-                  text: 'ERFAHREN SIE MEHR',
+                  text: 'ÜBER UNS',
                   onPressed: () {
                     widget.autoScrollController.scrollToIndex(
-                      10,
-                      preferPosition: AutoScrollPosition.end,
+                      9,
+                      preferPosition: AutoScrollPosition.middle,
+                      duration: const Duration(milliseconds: 500),
                     );
                   },
                   width: 220,

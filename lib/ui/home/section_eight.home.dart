@@ -11,11 +11,16 @@ class SectionEightHome extends StatefulWidget {
   State<SectionEightHome> createState() => _SectionEightHomeState();
 }
 
-class _SectionEightHomeState extends State<SectionEightHome> {
+class _SectionEightHomeState extends State<SectionEightHome>
+    with AutomaticKeepAliveClientMixin {
   final PageController controller = PageController();
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       width: double.infinity,
       color: Colors.white,

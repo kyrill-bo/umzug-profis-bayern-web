@@ -2,10 +2,13 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+
 import 'package:gap/gap.dart';
 import 'package:layout/layout.dart';
 import 'package:website/ui/widgets/action_button.dart';
 import 'package:dio/dio.dart';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
 
 class SectionSevenHome extends StatefulWidget {
   const SectionSevenHome({
@@ -19,7 +22,8 @@ class SectionSevenHome extends StatefulWidget {
   State<SectionSevenHome> createState() => _SectionSevenHomeState();
 }
 
-class _SectionSevenHomeState extends State<SectionSevenHome> {
+class _SectionSevenHomeState extends State<SectionSevenHome>
+    with AutomaticKeepAliveClientMixin {
   PageController mainPageController = PageController(
     initialPage: 0,
   );
@@ -79,6 +83,19 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
   // -------------------------------
 
   String filePath = '';
+
+  // -------------------------------
+
+  // Function to launch phone call
+  _launchURL(String url) async {
+    html.window.open(url, 'phone');
+
+    // if (await canLaunchUrl(Uri.parse(url))) {
+    //   await launchUrl(Uri.parse(url));
+    // } else {
+    //   throw 'Could not launch $url';
+    // }
+  }
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -270,8 +287,17 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
         },
       });
 
+      pageController
+          .nextPage(
+              duration: const Duration(milliseconds: 300), curve: Curves.ease)
+          .then((value) {
+        setState(() {
+          currentStep += 1;
+        });
+      });
+
       await _dio.post(
-        'http://localhost:3000/send-email',
+        'https://email.smokingmap.de/send-email',
         data: formData,
       );
     } catch (e) {
@@ -281,7 +307,11 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
@@ -464,39 +494,44 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.phone,
-                        color: Theme.of(context).primaryColor,
-                        size: 30,
-                      ),
-                      const Gap(5),
-                      const Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Telefonisch anrufen',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
-                            ),
-                            Gap(20),
-                            Text(
-                              '0172 - 30 50 125',
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                          ],
+                  GestureDetector(
+                    onTap: () {
+                      _launchURL('tel:01723050125');
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.phone,
+                          color: Theme.of(context).primaryColor,
+                          size: 30,
                         ),
-                      ),
-                    ],
+                        const Gap(5),
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Telefonisch anrufen',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22,
+                                ),
+                              ),
+                              Gap(20),
+                              Text(
+                                '0172 - 30 50 125',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const Gap(20),
                   Row(
@@ -717,6 +752,9 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
                                   ),
+                                  onPressed: () {
+                                    _launchURL('tel:01723050125');
+                                  },
                                 ),
                               ),
                             ),
@@ -763,7 +801,28 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
                 firstView(context),
                 secondView(context),
                 thirdView(context),
-                fourthView(context)
+                fourthView(context),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  child: const Column(
+                    children: [
+                      Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                        size: 100,
+                      ),
+                      Gap(20),
+                      Text(
+                        'Kontaktformular wurde erfolgreich gesendet!',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -796,39 +855,40 @@ class _SectionSevenHomeState extends State<SectionSevenHome> {
               ),
             ),
           const Gap(20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (currentStep > 0)
-                Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: ElevatedButton(
-                    onPressed: moveBack,
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Zurück',
-                        style: TextStyle(
-                          fontSize: 20,
+          if (currentStep < 4)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (currentStep > 0)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: ElevatedButton(
+                      onPressed: moveBack,
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'Zurück',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ElevatedButton(
-                onPressed: next,
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'Weiter',
-                    style: TextStyle(
-                      fontSize: 20,
+                ElevatedButton(
+                  onPressed: next,
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Weiter',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
         ],
       ),
     );

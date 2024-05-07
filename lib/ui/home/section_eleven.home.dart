@@ -2,11 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:layout/layout.dart';
 
-class SectionElevenHome extends StatelessWidget {
+class SectionElevenHome extends StatefulWidget {
   const SectionElevenHome({super.key});
 
   @override
+  State<SectionElevenHome> createState() => _SectionElevenHomeState();
+}
+
+class _SectionElevenHomeState extends State<SectionElevenHome>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       width: double.infinity,
       color: Theme.of(context).primaryColor,
