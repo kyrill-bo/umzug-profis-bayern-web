@@ -98,55 +98,55 @@ class _SectionFiveHomeState extends State<SectionFiveHome>
             ),
           ),
           const Gap(20),
-          // if (context.breakpoint <= LayoutBreakpoint.sm)
-          // Stack(
-          //   alignment: Alignment.topCenter,
-          //   children: [
-          //     LayoutBuilder(
-          //       builder: (context, constraints) => AspectRatio(
-          //         aspectRatio: 1.5,
-          //         child: Container(
-          //           padding: const EdgeInsets.all(15),
-          //           decoration: const BoxDecoration(
-          //             boxShadow: [
-          //               BoxShadow(
-          //                 color: Colors.grey,
-          //                 blurRadius: 15,
-          //               ),
-          //             ],
-          //           ),
-          //           child: Stack(
-          //             alignment: Alignment.bottomCenter,
-          //             fit: StackFit.expand,
-          //             children: [
-          //               Image.asset(
-          //                 'assets/img/privatumzueg.webp',
-          //                 fit: BoxFit.fitWidth,
-          //               ),
-          //               Positioned(
-          //                 top: constraints.maxHeight * 0.7,
-          //                 left: 0,
-          //                 right: 0,
-          //                 bottom: 0,
-          //                 child: Container(),
-          //               )
-          //             ],
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //     LayoutBuilder(
-          //       builder: (context, constraints) => Padding(
-          //         padding: EdgeInsets.only(
-          //           top: constraints.maxWidth / 1.5 * 0.5,
-          //           left: 15,
-          //           right: 15,
-          //         ),
-          //         child: textContent(context),
-          //       ),
-          //     ),
-          //   ],
-          // ),
+          if (context.breakpoint <= LayoutBreakpoint.sm)
+            Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                LayoutBuilder(
+                  builder: (context, constraints) => AspectRatio(
+                    aspectRatio: 1.5,
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 15,
+                          ),
+                        ],
+                      ),
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        fit: StackFit.expand,
+                        children: [
+                          Image.asset(
+                            'assets/img/privatumzueg.webp',
+                            fit: BoxFit.fitWidth,
+                          ),
+                          Positioned(
+                            top: constraints.maxHeight * 0.7,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            child: Container(),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                LayoutBuilder(
+                  builder: (context, constraints) => Padding(
+                    padding: EdgeInsets.only(
+                      top: constraints.maxWidth / 1.5 * 0.5,
+                      left: 15,
+                      right: 15,
+                    ),
+                    child: textContent(context),
+                  ),
+                ),
+              ],
+            ),
           if (context.breakpoint > LayoutBreakpoint.xs)
             Padding(
               padding: EdgeInsets.symmetric(
@@ -171,15 +171,13 @@ class _SectionFiveHomeState extends State<SectionFiveHome>
                       ),
                     ),
                   ),
-                  const Gap(20),
-                  Expanded(
-                    child: textContent(context),
-                  ),
+                  // const Gap(20),
+                  // Expanded(
+                  //   child: textContent(context),
+                  // ),
                 ],
               ),
             ),
-
-          // next section
           const Gap(20),
           Text(
             'Was wir tun werden',
