@@ -11,8 +11,7 @@ class SectionTenHome extends StatefulWidget {
   State<SectionTenHome> createState() => _SectionTenHomeState();
 }
 
-class _SectionTenHomeState extends State<SectionTenHome>
-    with AutomaticKeepAliveClientMixin {
+class _SectionTenHomeState extends State<SectionTenHome> {
   final ScrollController _controller = ScrollController();
   double _scrollPosition = 0.0;
 
@@ -95,11 +94,7 @@ class _SectionTenHomeState extends State<SectionTenHome>
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Container(
       width: double.infinity,
       color: Colors.white,

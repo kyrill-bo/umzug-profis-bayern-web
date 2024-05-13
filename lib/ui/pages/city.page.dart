@@ -102,15 +102,15 @@ class _CityPageState extends State<CityPage> {
   List cities = [
     {
       'name': 'Berlin',
-      'img': 'assets/img/berlin.jpg',
+      'img': 'assets/img/berlin.webp',
     },
     {
       'name': 'München',
-      'img': 'assets/img/muenchen.jpg',
+      'img': 'assets/img/muenchen.webp',
     },
     {
       'name': 'Bonn',
-      'img': 'assets/img/bonn.jpg',
+      'img': 'assets/img/bonn.webp',
     },
     {
       'name': 'Cham',
@@ -118,39 +118,39 @@ class _CityPageState extends State<CityPage> {
     },
     {
       'name': 'Dresden',
-      'img': 'assets/img/dresden.jpg',
+      'img': 'assets/img/dresden.webp',
     },
     {
       'name': 'Düsseldorf',
-      'img': 'assets/img/duesseldorf.jpg',
+      'img': 'assets/img/duesseldorf.webp',
     },
     {
       'name': 'Frankfurt',
-      'img': 'assets/img/frankfurt.jpg',
+      'img': 'assets/img/frankfurt.webp',
     },
     {
       'name': 'Hamburg',
-      'img': 'assets/img/hamburg.jpg',
+      'img': 'assets/img/hamburg.webp',
     },
     {
       'name': 'Köln',
-      'img': 'assets/img/koeln.jpg',
+      'img': 'assets/img/koeln.webp',
     },
     {
       'name': 'Leipzig',
-      'img': 'assets/img/leipzig.jpg',
+      'img': 'assets/img/leipzig.webp',
     },
     {
       'name': 'Linz',
-      'img': 'assets/img/linz.jpg',
+      'img': 'assets/img/linz.webp',
     },
     {
       'name': 'Mannheim',
-      'img': 'assets/img/mannheim.jpg',
+      'img': 'assets/img/mannheim.webp',
     },
     {
       'name': 'Luxemburg',
-      'img': 'assets/img/luxemburg.jpg',
+      'img': 'assets/img/luxemburg.webp',
     },
     {
       'name': 'Pilsen',
@@ -158,23 +158,23 @@ class _CityPageState extends State<CityPage> {
     },
     {
       'name': 'Prag',
-      'img': 'assets/img/prag.jpg',
+      'img': 'assets/img/prag.webp',
     },
     {
       'name': 'Stuttgart',
-      'img': 'assets/img/stuttgart.jpg',
+      'img': 'assets/img/stuttgart.webp',
     },
     {
       'name': 'Warschau',
-      'img': 'assets/img/warschau.jpg',
+      'img': 'assets/img/warschau.webp',
     },
     {
       'name': 'Salzburg',
-      'img': 'assets/img/salzburg.jpg',
+      'img': 'assets/img/salzburg.webp',
     },
     {
       'name': 'Wien',
-      'img': 'assets/img/wien.jpg',
+      'img': 'assets/img/wien.webp',
     }
   ];
 
@@ -706,7 +706,7 @@ class _CityPageState extends State<CityPage> {
                             ),
                           ),
                           const Gap(20),
-                          Text(
+                          const Text(
                             'Firmenumzug:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -722,7 +722,7 @@ class _CityPageState extends State<CityPage> {
                             ),
                           ),
                           const Gap(20),
-                          Text(
+                          const Text(
                             'Fernumzug:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -738,7 +738,7 @@ class _CityPageState extends State<CityPage> {
                             ),
                           ),
                           const Gap(20),
-                          Text(
+                          const Text(
                             'USM Haller Montage:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -754,11 +754,10 @@ class _CityPageState extends State<CityPage> {
                             ),
                           ),
                           const Gap(20),
-                          Text(
+                          const Text(
                             'Einlagerung:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              // color: Theme.of(context).primaryColor,
                               fontSize: 20,
                             ),
                           ),
@@ -770,11 +769,10 @@ class _CityPageState extends State<CityPage> {
                             ),
                           ),
                           const Gap(20),
-                          Text(
+                          const Text(
                             'Privatumzug:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              // color: Theme.of(context).primaryColor,
                               fontSize: 20,
                             ),
                           ),
@@ -786,11 +784,10 @@ class _CityPageState extends State<CityPage> {
                             ),
                           ),
                           const Gap(20),
-                          Text(
+                          const Text(
                             'Entrümpelung:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              // color: Theme.of(context).primaryColor,
                               fontSize: 20,
                             ),
                           ),

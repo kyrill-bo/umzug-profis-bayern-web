@@ -11,88 +11,83 @@ class SectionSixHome extends StatefulWidget {
   State<SectionSixHome> createState() => _SectionSixHomeState();
 }
 
-class _SectionSixHomeState extends State<SectionSixHome>
-    with AutomaticKeepAliveClientMixin {
+class _SectionSixHomeState extends State<SectionSixHome> {
   CarouselController controller = CarouselController();
   int currentIndex = 0;
 
   List cities = [
     {
       'name': 'Berlin',
-      'img': 'assets/img/berlin.jpg',
+      'img': 'assets/img/berlin.webp',
     },
     {
       'name': 'München',
-      'img': 'assets/img/muenchen.jpg',
+      'img': 'assets/img/muenchen.webp',
     },
     {
       'name': 'Bonn',
-      'img': 'assets/img/bonn.jpg',
+      'img': 'assets/img/bonn.webp',
     },
     {
       'name': 'Cham',
-      'img': 'assets/img/cham.jpg',
+      'img': 'assets/img/cham.webp',
     },
     {
       'name': 'Dresden',
-      'img': 'assets/img/dresden.jpg',
+      'img': 'assets/img/dresden.webp',
     },
     {
       'name': 'Düsseldorf',
-      'img': 'assets/img/duesseldorf.jpg',
+      'img': 'assets/img/duesseldorf.webp',
     },
     {
       'name': 'Frankfurt',
-      'img': 'assets/img/frankfurt.jpg',
+      'img': 'assets/img/frankfurt.webp',
     },
     {
       'name': 'Hamburg',
-      'img': 'assets/img/hamburg.jpg',
+      'img': 'assets/img/hamburg.webp',
     },
     {
       'name': 'Köln',
-      'img': 'assets/img/koeln.jpg',
+      'img': 'assets/img/koeln.webp',
     },
     {
       'name': 'Leipzig',
-      'img': 'assets/img/leipzig.jpg',
+      'img': 'assets/img/leipzig.webp',
     },
     {
       'name': 'Linz',
-      'img': 'assets/img/linz.jpg',
+      'img': 'assets/img/linz.webp',
     },
     {
       'name': 'Mannheim',
-      'img': 'assets/img/mannheim.jpg',
+      'img': 'assets/img/mannheim.webp',
     },
     {
       'name': 'Luxemburg',
-      'img': 'assets/img/luxemburg.jpg',
+      'img': 'assets/img/luxemburg.webp',
     },
     {
       'name': 'Pilsen',
-      'img': 'assets/img/pilsen.jpg',
+      'img': 'assets/img/pilsen.webp',
     },
     {
       'name': 'Prag',
-      'img': 'assets/img/prag.jpg',
+      'img': 'assets/img/prag.webp',
     },
     {
       'name': 'Stuttgart',
-      'img': 'assets/img/stuttgart.jpg',
+      'img': 'assets/img/stuttgart.webp',
     },
     {
       'name': 'Warschau',
-      'img': 'assets/img/warschau.jpg',
+      'img': 'assets/img/warschau.webp',
     }
   ];
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -263,6 +258,11 @@ class _SectionSixHomeState extends State<SectionSixHome>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Expanded(
+                        child: Container(
+                          color: Colors.transparent,
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           controller.previousPage();
@@ -283,6 +283,11 @@ class _SectionSixHomeState extends State<SectionSixHome>
                             Icons.arrow_back_ios,
                             size: 50,
                           ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          color: Colors.transparent,
                         ),
                       ),
                     ],

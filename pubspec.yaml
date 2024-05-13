@@ -53,10 +53,9 @@ dependencies:
   avatar_glow: ^3.0.1
   layout: ^1.0.5
   scroll_to_index: ^3.0.1
-  web_smooth_scroll: ^1.1.0
   dio: ^5.4.3+1
   url_launcher: ^6.2.6
-  smooth_scroll_multiplatform: ^1.0.8
+  dyn_mouse_scroll: ^1.0.7
 
 
 dev_dependencies:

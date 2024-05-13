@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:gap/gap.dart';
 import 'package:layout/layout.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:website/ui/widgets/action_button.dart';
 import 'package:dio/dio.dart';
 // ignore: avoid_web_libraries_in_flutter
@@ -14,9 +15,11 @@ class SectionSevenHome extends StatefulWidget {
   const SectionSevenHome({
     super.key,
     this.modal = false,
+    this.scrollController,
   });
 
   final bool modal;
+  final AutoScrollController? scrollController;
 
   @override
   State<SectionSevenHome> createState() => _SectionSevenHomeState();
@@ -24,6 +27,8 @@ class SectionSevenHome extends StatefulWidget {
 
 class _SectionSevenHomeState extends State<SectionSevenHome>
     with AutomaticKeepAliveClientMixin {
+  AutoScrollController scrollController = AutoScrollController();
+
   PageController mainPageController = PageController(
     initialPage: 0,
   );
@@ -89,12 +94,6 @@ class _SectionSevenHomeState extends State<SectionSevenHome>
   // Function to launch phone call
   _launchURL(String url) async {
     html.window.open(url, 'phone');
-
-    // if (await canLaunchUrl(Uri.parse(url))) {
-    //   await launchUrl(Uri.parse(url));
-    // } else {
-    //   throw 'Could not launch $url';
-    // }
   }
 
   Future<void> _pickFile() async {
@@ -223,6 +222,10 @@ class _SectionSevenHomeState extends State<SectionSevenHome>
         setState(() {
           currentStep += 1;
         });
+        scrollController.scrollToIndex(
+          7,
+          preferPosition: AutoScrollPosition.begin,
+        );
       });
     }
   }
@@ -237,6 +240,10 @@ class _SectionSevenHomeState extends State<SectionSevenHome>
       setState(() {
         currentStep -= 1;
       });
+      scrollController.scrollToIndex(
+        7,
+        preferPosition: AutoScrollPosition.end,
+      );
     });
   }
 
@@ -304,6 +311,14 @@ class _SectionSevenHomeState extends State<SectionSevenHome>
       // ignore: avoid_print
       print(e);
     }
+  }
+
+  @override
+  void initState() {
+    if (widget.scrollController != null) {
+      scrollController = widget.scrollController!;
+    }
+    super.initState();
   }
 
   @override

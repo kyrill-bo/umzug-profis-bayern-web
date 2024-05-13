@@ -61,6 +61,15 @@ class _ServicePageState extends State<ServicePage> {
     "Sicherheit für Ihre Schätze. PRIVATSPHÄRE wird bei uns groß geschrieben!",
   ];
 
+  List<String> servicesImg = [
+    'assets/img/privatumzug.webp',
+    'assets/img/firmenumzug.webp',
+    'assets/img/entruempelung.webp',
+    'assets/img/fernumzug.webp',
+    'assets/img/haller-montage.webp',
+    'assets/img/einlagerung.webp',
+  ];
+
   List<bool> isHoverList = List.filled(6, false);
   CarouselController controller = CarouselController();
 
@@ -225,7 +234,10 @@ class _ServicePageState extends State<ServicePage> {
                                               const Gap(10),
                                               Expanded(
                                                 child: Image.asset(
-                                                  'assets/img/privatumzueg.webp',
+                                                  servicesImg[services.indexOf(
+                                                    service,
+                                                  )],
+                                                  width: double.infinity,
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -481,7 +493,8 @@ class _ServicePageState extends State<ServicePage> {
                                                       const BoxDecoration(
                                                     image: DecorationImage(
                                                       image: AssetImage(
-                                                          'assets/img/box-2.webp'),
+                                                        'assets/img/box-2.webp',
+                                                      ),
                                                       fit: BoxFit.fitHeight,
                                                     ),
                                                   ),
@@ -547,7 +560,13 @@ class _ServicePageState extends State<ServicePage> {
                                                           const Gap(10),
                                                           Expanded(
                                                             child: Image.asset(
-                                                              'assets/img/privatumzueg.webp',
+                                                              servicesImg[
+                                                                  services
+                                                                      .indexOf(
+                                                                service,
+                                                              )],
+                                                              width: double
+                                                                  .infinity,
                                                               fit: BoxFit.cover,
                                                             ),
                                                           ),

@@ -11,8 +11,7 @@ class SectionThreeHome extends StatefulWidget {
   State<SectionThreeHome> createState() => _SectionThreeHomeState();
 }
 
-class _SectionThreeHomeState extends State<SectionThreeHome>
-    with AutomaticKeepAliveClientMixin {
+class _SectionThreeHomeState extends State<SectionThreeHome> {
   openProfile() {
     showDialog(
       context: context,
@@ -56,11 +55,7 @@ class _SectionThreeHomeState extends State<SectionThreeHome>
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: 40,

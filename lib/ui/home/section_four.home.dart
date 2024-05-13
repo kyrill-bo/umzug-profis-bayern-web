@@ -78,7 +78,7 @@ class _SectionFourHomeState extends State<SectionFourHome>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/img/icon-strong.webp',
+                      'assets/img/20-years-exp.webp',
                       height: 80,
                     ),
                     const Text(
@@ -128,7 +128,7 @@ class _SectionFourHomeState extends State<SectionFourHome>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/img/icon-tree.webp',
+                      'assets/img/three-stars.webp',
                       height: 80,
                     ),
                     const Text(
@@ -178,7 +178,7 @@ class _SectionFourHomeState extends State<SectionFourHome>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/img/icon-lampe.webp',
+                      'assets/img/best-offer.webp',
                       height: 80,
                     ),
                     const Text(
@@ -228,7 +228,7 @@ class _SectionFourHomeState extends State<SectionFourHome>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/img/icon-rabatt.webp',
+                      'assets/img/trusted-seller.webp',
                       height: 80,
                     ),
                     const Text(
@@ -278,7 +278,7 @@ class _SectionFourHomeState extends State<SectionFourHome>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/img/icon-hand.webp',
+                      'assets/img/lamp.webp',
                       height: 80,
                     ),
                     Text(

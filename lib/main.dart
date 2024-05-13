@@ -66,7 +66,6 @@ class _MyAppState extends State<MyApp> {
             primary: const Color(0xFF44a6d8),
             secondary: const Color(0xFFfef500),
           ),
-          useMaterial3: true,
         ),
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         supportedLocales: const [

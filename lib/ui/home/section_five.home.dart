@@ -120,8 +120,9 @@ class _SectionFiveHomeState extends State<SectionFiveHome>
                         fit: StackFit.expand,
                         children: [
                           Image.asset(
-                            'assets/img/privatumzueg.webp',
+                            'assets/img/hand-keys.webp',
                             fit: BoxFit.fitWidth,
+                            alignment: Alignment.bottomLeft,
                           ),
                           Positioned(
                             top: constraints.maxHeight * 0.7,
@@ -152,30 +153,43 @@ class _SectionFiveHomeState extends State<SectionFiveHome>
               padding: EdgeInsets.symmetric(
                 horizontal: context.breakpoint > LayoutBreakpoint.xs ? 100 : 0,
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: const BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 15,
-                          ),
-                        ],
+              child: Center(
+                child: Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        right: 100,
+                        bottom: 50,
                       ),
-                      child: Image.asset(
-                        'assets/img/privatumzueg.webp',
+                      child: Container(
+                        width: 800,
+                        padding: const EdgeInsets.all(15),
+                        decoration: const BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 15,
+                            ),
+                          ],
+                        ),
+                        child: Image.asset(
+                          'assets/img/hand-keys.webp',
+                        ),
                       ),
                     ),
-                  ),
-                  // const Gap(20),
-                  // Expanded(
-                  //   child: textContent(context),
-                  // ),
-                ],
+                    LayoutBuilder(
+                      builder: (context, constraints) => Padding(
+                        padding: EdgeInsets.only(
+                          top: constraints.maxWidth / 1.5 * 0.5,
+                          left: 15,
+                          right: 15,
+                        ),
+                        child: textContent(context),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           const Gap(20),
@@ -198,61 +212,61 @@ class _SectionFiveHomeState extends State<SectionFiveHome>
                 runSpacing: 10,
                 children: [
                   ProfitierenItem(
-                    isHover: true,
                     width: size,
                     height: context.breakpoint == LayoutBreakpoint.xs
                         ? null
                         : size * 0.8,
+                    img: 'assets/img/home-box.webp',
                     title: 'Individueller Umzugsplan',
                     text:
                         'Basierend auf Ihren Bedürfnissen erstellen wir einen maßgeschneiderten Umzugsplan, der alle Details berücksichtigt, um einen reibungslosen Ablauf zu gewährleisten.',
                   ),
                   ProfitierenItem(
-                    isHover: true,
                     width: size,
                     height: context.breakpoint == LayoutBreakpoint.xs
                         ? null
                         : size * 0.8,
+                    img: 'assets/img/switch-packages.webp',
                     title: 'Verpackungsservice',
                     text:
                         'Unsere erfahrenen Mitarbeiter kümmern sich um das sichere Verpacken Ihres gesamten Inventars, von empfindlichen Gegenständen bis hin zu Möbeln, um Schäden zu vermeiden.',
                   ),
                   ProfitierenItem(
-                    isHover: true,
                     width: size,
                     height: context.breakpoint == LayoutBreakpoint.xs
                         ? null
                         : size * 0.8,
+                    img: 'assets/img/montage.webp',
                     title: 'Möbelmontage und -demontage',
                     text:
                         'Wir demontieren und montieren Ihre Möbel professionell, um Zeit zu sparen und sicherzustellen, dass sie sicher transportiert werden.',
                   ),
                   ProfitierenItem(
-                    isHover: true,
                     width: size,
                     height: context.breakpoint == LayoutBreakpoint.xs
                         ? null
                         : size * 0.8,
+                    img: 'assets/img/side-lkw.webp',
                     title: 'Professionelle Transportmittel',
                     text:
                         'Wir verfügen über eine Flotte von Fahrzeugen in verschiedenen Größen, um Ihren Umzug effizient und ohne Verzögerungen durchzuführen.',
                   ),
                   ProfitierenItem(
-                    isHover: true,
                     width: size,
                     height: context.breakpoint == LayoutBreakpoint.xs
                         ? null
                         : size * 0.8,
+                    img: 'assets/img/time-lkw.webp',
                     title: 'Zeitgerechte Lieferung',
                     text:
                         'Wir halten uns strikt an den vereinbarten Zeitplan und liefern Ihr Eigentum pünktlich an die Zieladresse.',
                   ),
                   ProfitierenItem(
-                    isHover: true,
                     width: size,
                     height: context.breakpoint == LayoutBreakpoint.xs
                         ? null
                         : size * 0.8,
+                    img: 'assets/img/cleaner.webp',
                     title: 'Endreinigungsservice',
                     text:
                         'Nach dem Umzug bieten wir auch einen Endreinigungsservice an, um sicherzustellen, dass Ihr altes Zuhause ordentlich und sauber hinterlassen wird.',
@@ -268,146 +282,107 @@ class _SectionFiveHomeState extends State<SectionFiveHome>
 
   Padding textContent(BuildContext context) {
     return Padding(
-      padding: context.breakpoint > LayoutBreakpoint.xs
-          ? const EdgeInsets.all(15.0)
-          : const EdgeInsets.only(
-              top: 15,
-              left: 15,
-              bottom: 15,
+      padding: const EdgeInsets.only(
+        top: 15,
+        left: 15,
+        bottom: 15,
+      ),
+      child: Container(
+        width: 600,
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 15,
             ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          if (context.breakpoint > LayoutBreakpoint.xs) const Gap(50),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (context.breakpoint > LayoutBreakpoint.xs)
-                Icon(
-                  Icons.phone,
-                  color: Theme.of(context).primaryColor,
-                  size: 30,
-                ),
-              Column(
-                children: [
-                  Icon(
-                    Icons.email,
-                    color: context.breakpoint > LayoutBreakpoint.xs
-                        ? Theme.of(context).primaryColor
-                        : Colors.transparent,
-                    size: 30,
-                  ),
-                  if (context.breakpoint == LayoutBreakpoint.xs)
-                    Icon(
-                      Icons.phone,
-                      color: Theme.of(context).primaryColor,
-                      size: 30,
-                    ),
-                ],
-              ),
-              const Gap(5),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  decoration: BoxDecoration(
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 15,
-                      ),
-                    ],
-                    gradient: context.breakpoint > LayoutBreakpoint.xs
-                        ? null
-                        : LinearGradient(
-                            colors: [
-                              Colors.black.withOpacity(0.8),
-                              Colors.black.withOpacity(0.0),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Umzugsanfrage senden',
-                            style: TextStyle(
-                              color: context.breakpoint > LayoutBreakpoint.xs
-                                  ? null
-                                  : Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22,
-                            ),
-                          ),
-                          const Gap(5),
-                          if (context.breakpoint == LayoutBreakpoint.xs)
-                            Expanded(
-                              child: Icon(
-                                Icons.email,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                            ),
-                          if (context.breakpoint == LayoutBreakpoint.xs)
-                            Expanded(
-                              child: Icon(
-                                Icons.phone,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                            ),
-                        ],
-                      ),
-                      const Gap(20),
-                      Text(
-                        'Ab jetzt übernehmen wir! Nach einem Wunschtermin gönnen Sie sich einen Kaffee, denn ihr Umzug ist sogut wie erledigt.',
-                        style: TextStyle(
-                          color: context.breakpoint > LayoutBreakpoint.xs
-                              ? null
-                              : Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
-                      const Gap(20),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 15,
-                              )
-                            ],
-                          ),
-                          child: ActionButton(
-                            text: 'JETZT KONTAKTIEREN',
-                            color: Theme.of(context).colorScheme.secondary,
-                            borderSize: 2,
-                            glowSize: 2,
-                            borderColor:
-                                Theme.of(context).colorScheme.secondary,
-                            shadowColor: Colors.grey,
-                            onPressed: openProfile,
-                            textStyle: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+          ],
+          gradient: LinearGradient(
+            colors: [
+              Colors.black.withOpacity(0.8),
+              Colors.black.withOpacity(0.0),
             ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-        ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Text(
+                  'Umzugsanfrage senden',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
+                ),
+                const Gap(5),
+                context.breakpoint > LayoutBreakpoint.xs
+                    ? Icon(
+                        Icons.email,
+                        color: Theme.of(context).colorScheme.secondary,
+                      )
+                    : Expanded(
+                        child: Icon(
+                          Icons.email,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                context.breakpoint > LayoutBreakpoint.xs
+                    ? Icon(
+                        Icons.phone,
+                        color: Theme.of(context).colorScheme.secondary,
+                      )
+                    : Expanded(
+                        child: Icon(
+                          Icons.phone,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+              ],
+            ),
+            const Gap(20),
+            const Text(
+              'Ab jetzt übernehmen wir! Nach einem Wunschtermin gönnen Sie sich einen Kaffee, denn ihr Umzug ist sogut wie erledigt.',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+            const Gap(20),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 15,
+                    )
+                  ],
+                ),
+                child: ActionButton(
+                  text: 'JETZT KONTAKTIEREN',
+                  color: Theme.of(context).colorScheme.secondary,
+                  borderSize: 2,
+                  glowSize: 2,
+                  borderColor: Theme.of(context).colorScheme.secondary,
+                  shadowColor: Colors.grey,
+                  onPressed: openProfile,
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -420,32 +395,21 @@ class ProfitierenItem extends StatefulWidget {
     required this.height,
     required this.title,
     required this.text,
-    this.isHover = false,
+    required this.img,
   });
 
+  final String img;
   final double width;
   final double? height;
   final String title;
   final String text;
-
-  final bool isHover;
 
   @override
   State<ProfitierenItem> createState() => _ProfitierenItemState();
 }
 
 class _ProfitierenItemState extends State<ProfitierenItem> {
-  final GlobalKey widgetKey = GlobalKey();
   bool isHover = false;
-
-  @override
-  void initState() {
-    setState(() {
-      isHover = widget.isHover;
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -454,7 +418,6 @@ class _ProfitierenItemState extends State<ProfitierenItem> {
     }
 
     return MouseRegion(
-      key: widgetKey,
       onEnter: (event) {
         setState(() {
           isHover = true;
@@ -475,8 +438,7 @@ class _ProfitierenItemState extends State<ProfitierenItem> {
           height: widget.height,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color:
-                widget.isHover ? Colors.white : Colors.black.withOpacity(0.7),
+            color: Colors.white,
             border: context.breakpoint > LayoutBreakpoint.xs
                 ? null
                 : Border.all(
@@ -485,10 +447,9 @@ class _ProfitierenItemState extends State<ProfitierenItem> {
           ),
           child: Column(
             children: [
-              Icon(
-                Icons.access_time_rounded,
-                size: 80,
-                color: Theme.of(context).primaryColor,
+              Image.asset(
+                widget.img,
+                height: 80,
               ),
               const Gap(20),
               Text(

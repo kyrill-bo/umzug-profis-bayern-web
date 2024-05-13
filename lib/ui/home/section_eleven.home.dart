@@ -9,14 +9,9 @@ class SectionElevenHome extends StatefulWidget {
   State<SectionElevenHome> createState() => _SectionElevenHomeState();
 }
 
-class _SectionElevenHomeState extends State<SectionElevenHome>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
+class _SectionElevenHomeState extends State<SectionElevenHome> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Container(
       width: double.infinity,
       color: Theme.of(context).primaryColor,

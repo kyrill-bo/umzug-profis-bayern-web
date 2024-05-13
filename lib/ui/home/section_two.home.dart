@@ -32,6 +32,15 @@ class _SectionTwoHomeState extends State<SectionTwoHome>
     "Sicherheit für Ihre Schätze. PRIVATSPHÄRE wird bei uns groß geschrieben!",
   ];
 
+  List<String> servicesImg = [
+    'assets/img/privatumzug.webp',
+    'assets/img/firmenumzug.webp',
+    'assets/img/entruempelung.webp',
+    'assets/img/fernumzug.webp',
+    'assets/img/haller-montage.webp',
+    'assets/img/einlagerung.webp',
+  ];
+
   List<bool> isHoverList = List.filled(6, false);
   CarouselController controller = CarouselController();
 
@@ -86,72 +95,119 @@ class _SectionTwoHomeState extends State<SectionTwoHome>
           const Gap(20),
           Expanded(
             child: Stack(
+              fit: StackFit.expand,
               children: [
-                Positioned.fill(
-                  child: CarouselSlider(
-                    carouselController: controller,
-                    items: services.map((service) {
-                      return MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        onHover: (event) => setState(() {
-                          controller.stopAutoPlay();
-                        }),
-                        onEnter: (event) {
-                          setState(() {
-                            isHoverList[services.indexOf(service)] = true;
-                          });
+                CarouselSlider(
+                  carouselController: controller,
+                  items: services.map((service) {
+                    return MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      onHover: (event) => setState(() {
+                        controller.stopAutoPlay();
+                      }),
+                      onEnter: (event) {
+                        setState(() {
+                          isHoverList[services.indexOf(service)] = true;
+                        });
+                      },
+                      onExit: (event) {
+                        setState(() {
+                          isHoverList[services.indexOf(service)] = false;
+                        });
+                        controller.startAutoPlay();
+                      },
+                      child: GestureDetector(
+                        onTap: () {
+                          context.go(Uri(
+                            path: '/',
+                            queryParameters: {'service': service},
+                          ).toString());
                         },
-                        onExit: (event) {
-                          setState(() {
-                            isHoverList[services.indexOf(service)] = false;
-                          });
-                          controller.startAutoPlay();
-                        },
-                        child: GestureDetector(
-                          onTap: () {
-                            context.go(Uri(
-                              path: '/',
-                              queryParameters: {'service': service},
-                            ).toString());
-                          },
-                          child: LayoutBuilder(
-                            builder: (context, constraints) => Container(
-                              width: constraints.maxHeight * 1.06024,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/img/box-2.webp'),
-                                  fit: BoxFit.fitHeight,
-                                ),
+                        child: LayoutBuilder(
+                          builder: (context, constraints) => Container(
+                            // width: constraints.maxHeight * 1.06024,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/img/box-2.webp'),
+                                fit: BoxFit.fitHeight,
                               ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal:
-                                      context.breakpoint > LayoutBreakpoint.xs
-                                          ? 40
-                                          : 20,
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal:
+                                    context.breakpoint > LayoutBreakpoint.xs
+                                        ? 40
+                                        : 20,
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      height: constraints.maxHeight * 0.13,
+                                      alignment: Alignment.bottomCenter,
+                                      child: LayoutBuilder(
+                                        builder: (context, constraints) {
+                                          return Text(
+                                            service,
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: context.breakpoint >
+                                                      LayoutBreakpoint.xs
+                                                  ? 30
+                                                  : 18,
+                                              shadows: const [
+                                                Shadow(
+                                                  color: Colors.black,
+                                                  blurRadius: 5,
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    const Gap(10),
+                                    Expanded(
+                                      child: Image.asset(
+                                        servicesImg[services.indexOf(
+                                          service,
+                                        )],
                                         width: double.infinity,
-                                        height: constraints.maxHeight * 0.13,
-                                        alignment: Alignment.bottomCenter,
-                                        child: LayoutBuilder(
-                                          builder: (context, constraints) {
-                                            return Text(
-                                              service,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    const Gap(10),
+                                    SizedBox(
+                                      height: 70,
+                                      child: RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: servicesDescription[
+                                                  services.indexOf(service)],
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: context.breakpoint >
+                                                        LayoutBreakpoint.xs
+                                                    ? 20
+                                                    : 14,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: ' Mehr',
                                               style: TextStyle(
                                                 color: Theme.of(context)
                                                     .primaryColor,
-                                                fontWeight: FontWeight.bold,
                                                 fontSize: context.breakpoint >
                                                         LayoutBreakpoint.xs
-                                                    ? 30
-                                                    : 18,
+                                                    ? 16
+                                                    : 14,
                                                 shadows: const [
                                                   Shadow(
                                                     color: Colors.black,
@@ -159,82 +215,35 @@ class _SectionTwoHomeState extends State<SectionTwoHome>
                                                   )
                                                 ],
                                               ),
-                                            );
-                                          },
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      const Gap(10),
-                                      Expanded(
-                                        child: Image.asset(
-                                          'assets/img/privatumzueg.webp',
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      const Gap(10),
-                                      SizedBox(
-                                        height: 70,
-                                        child: RichText(
-                                          textAlign: TextAlign.center,
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: servicesDescription[
-                                                    services.indexOf(service)],
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: context.breakpoint >
-                                                          LayoutBreakpoint.xs
-                                                      ? 20
-                                                      : 14,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: ' Mehr',
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                  fontSize: context.breakpoint >
-                                                          LayoutBreakpoint.xs
-                                                      ? 16
-                                                      : 14,
-                                                  shadows: const [
-                                                    Shadow(
-                                                      color: Colors.black,
-                                                      blurRadius: 5,
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      const Gap(5),
-                                    ],
-                                  ),
+                                    ),
+                                    const Gap(5),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      );
-                    }).toList(),
-                    options: CarouselOptions(
-                      scrollPhysics: const ClampingScrollPhysics(),
-                      enlargeFactor: 0.5,
-                      autoPlayInterval: const Duration(seconds: 5),
-                      enlargeStrategy: CenterPageEnlargeStrategy.scale,
-                      aspectRatio: 540 / 509,
-                      viewportFraction: context.layout.value(
-                        xs: 0.65,
-                        sm: 0.6,
-                        md: 0.5,
-                        lg: 0.3,
                       ),
-                      enlargeCenterPage: true,
-                      // autoPlay: true,
-                      autoPlay: false,
+                    );
+                  }).toList(),
+                  options: CarouselOptions(
+                    scrollPhysics: const ClampingScrollPhysics(),
+                    enlargeFactor: 0.5,
+                    autoPlayInterval: const Duration(seconds: 5),
+                    enlargeStrategy: CenterPageEnlargeStrategy.scale,
+                    aspectRatio: 540 / 509,
+                    viewportFraction: context.layout.value(
+                      xs: 0.65,
+                      sm: 0.6,
+                      md: 0.5,
+                      lg: 0.3,
                     ),
+                    enlargeCenterPage: true,
+                    autoPlay: true,
                   ),
                 ),
                 Positioned.fill(

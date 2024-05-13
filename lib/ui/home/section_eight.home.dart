@@ -11,16 +11,11 @@ class SectionEightHome extends StatefulWidget {
   State<SectionEightHome> createState() => _SectionEightHomeState();
 }
 
-class _SectionEightHomeState extends State<SectionEightHome>
-    with AutomaticKeepAliveClientMixin {
+class _SectionEightHomeState extends State<SectionEightHome> {
   final PageController controller = PageController();
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -78,7 +73,7 @@ class _SectionEightHomeState extends State<SectionEightHome>
               if (context.breakpoint > LayoutBreakpoint.sm) const Gap(20),
               Expanded(
                 child: Container(
-                  height: 300,
+                  height: 380,
                   width: context.breakpoint > LayoutBreakpoint.md ? 600 : null,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -98,26 +93,31 @@ class _SectionEightHomeState extends State<SectionEightHome>
                         context,
                         'Keine bösen Überraschungen',
                         'Mit Umzug Profis Bayern werden Sie keine versteckten Kosten erhalten.',
+                        'assets/img/great-job.webp',
                       ),
                       pageItem(
                         context,
                         'Schnelle Kommunikation',
                         'Ihre individuelle Wünsche sind uns wichtig, deshalb arbeiten wir schnell.',
+                        'assets/img/group-chat.webp',
                       ),
                       pageItem(
                         context,
                         'Kostenfreie Besichtigung',
                         'Unverbindliche Besichtigung und kostenloses Angebot.',
+                        'assets/img/notes.webp',
                       ),
                       pageItem(
                         context,
                         'Top Preise - Top Team',
                         'Bei Umzug Profis Bayern profitieren Sie nicht nur von besten Preisverhältnis, sondern Sie erwartet ein starkes, motiviertes Team mit einer dynamischen herangehensweise.',
+                        'assets/img/best-seller.webp',
                       ),
                       pageItem(
                         context,
                         'Kundensupport',
                         'Unser freundliches Kundensupport-Team steht Ihnen jederzeit zur Verfügung, um Fragen zu beantworten und Unterstützung zu bieten.',
+                        'assets/img/customer-service.webp',
                       ),
                     ],
                   ),
@@ -159,6 +159,7 @@ class _SectionEightHomeState extends State<SectionEightHome>
     BuildContext context,
     String title,
     String text,
+    String img,
   ) {
     return Padding(
       padding: context.breakpoint > LayoutBreakpoint.xs
@@ -172,11 +173,15 @@ class _SectionEightHomeState extends State<SectionEightHome>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.access_time_rounded,
-            size: 80,
-            color: Theme.of(context).primaryColor,
+          Image.asset(
+            img,
+            height: 170,
           ),
+          // Icon(
+          //   Icons.access_time_rounded,
+          //   size: 80,
+          //   color: Theme.of(context).primaryColor,
+          // ),
           Gap(context.breakpoint > LayoutBreakpoint.xs ? 20 : 10),
           Text(
             title,

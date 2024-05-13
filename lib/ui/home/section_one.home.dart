@@ -18,8 +18,7 @@ class SectionOneHome extends StatefulWidget {
   State<SectionOneHome> createState() => _SectionOneHomeState();
 }
 
-class _SectionOneHomeState extends State<SectionOneHome>
-    with AutomaticKeepAliveClientMixin {
+class _SectionOneHomeState extends State<SectionOneHome> {
   openProfile() {
     showDialog(
       context: context,
@@ -56,9 +55,10 @@ class _SectionOneHomeState extends State<SectionOneHome>
                 child: Material(
                   color: Colors.white,
                   child: SingleChildScrollView(
-                      child: SectionSevenHome(
-                    modal: context.breakpoint == LayoutBreakpoint.xs,
-                  )),
+                    child: SectionSevenHome(
+                      modal: context.breakpoint == LayoutBreakpoint.xs,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -69,11 +69,7 @@ class _SectionOneHomeState extends State<SectionOneHome>
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
       decoration: BoxDecoration(
